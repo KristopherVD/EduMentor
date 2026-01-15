@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block content %}
+
+<h2>Subir archivos</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  <label>Selecciona hasta 20 archivos:</label>
+  <input type="file" multiple name="files" />
+
+  <button type="submit">Subir</button>
+</form>
+
+<a class="cancel" href="/">Cancelar</a>
+
+{% endblock %}

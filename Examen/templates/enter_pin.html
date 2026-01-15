@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %}PIN requerido{% endblock %} {% block
+content %}
+<h1>Introduce tu PIN</h1>
+
+{% if error %}
+<p style="color: #ff7777; text-align: center">{{ error }}</p>
+{% endif %}
+
+<form method="POST">
+  <input type="password" name="pin" placeholder="PIN" maxlength="4" required />
+
+  <button class="btn" type="submit">Entrar</button>
+</form>
+
+<a href="/" class="btn danger">Cancelar</a>
+{% endblock %}

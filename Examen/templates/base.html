@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}EduMentor{% endblock %}</title>
+
+    <!-- Tu style.css original -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+
+    <style>
+      /* Fondo general como la pantalla principal */
+      body {
+        background-color: #111;
+        color: white;
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      /* Contenedor compacto y con estilo */
+      .page-container {
+        width: 85%;
+        max-width: 600px;
+        margin: 40px auto;
+        background: #1a1a1a;
+        padding: 20px 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+      }
+
+      h1,
+      h2 {
+        color: white;
+        font-size: 26px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      /* Botones compactos */
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 15px;
+        border-radius: 8px;
+        font-size: 16px;
+        background: #007bff;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+
+      .btn:hover {
+        background: #0056d6;
+      }
+
+      .danger {
+        background: #d9534f;
+      }
+
+      .danger:hover {
+        background: #b43b38;
+      }
+
+      /* Inputs */
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #444;
+        background: #222;
+        color: white;
+        margin-top: 10px;
+      }
+    </style>
+    <style>
+      .course-content h2 {
+        margin-top: 30px;
+      }
+      .course-content table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .course-content table,
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+      }
+      .course-content code {
+        background: #f4f4f4;
+        padding: 2px 4px;
+      }
+    </style>
+
+    {% block head %}
+    <style>
+      .option-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+
+      .option-row input {
+        margin-top: 4px;
+      }
+
+      .option-letter {
+        font-weight: bold;
+        min-width: 22px;
+      }
+
+      .option-text {
+        flex: 1;
+      }
+    </style>
+
+    {% endblock %}
+  </head>
+
+  <body>
+    <div class="page-container">{% block content %}{% endblock %}</div>
+  </body>
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ["$", "$"],
+          ["\\(", "\\)"],
+        ],
+        displayMath: [
+          ["$$", "$$"],
+          ["\\[", "\\]"],
+        ],
+      },
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</html>

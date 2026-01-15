@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block title %}Subir documentos · EduMentor
+{%endblock %} {% block content %}
+<h1>Subir documentos</h1>
+<p style="text-align: center">
+  Selecciona los archivos que EduMentor usará para crear tu curso personalizado.
+</p>
+
+<form method="POST" enctype="multipart/form-data">
+  <input type="file" name="docs" multiple required />
+
+  <button class="btn" type="submit">Guardar y generar curso</button>
+</form>
+
+<a href="/" class="btn danger">Cancelar</a>
+{% endblock %}

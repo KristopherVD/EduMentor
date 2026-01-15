@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EduMentor</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <style>
+      /* menú contextual */
+      .context-menu {
+        position: absolute;
+        display: none;
+        background: #222;
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 10px;
+        z-index: 9999;
+      }
+      .context-menu a {
+        display: block;
+        padding: 6px 10px;
+        color: white;
+        text-decoration: none;
+      }
+      .context-menu a:hover {
+        background: #333;
+      }
+    </style>
+  </head>
+
+  <body style="background-color: #111">
+    <h1 style="color: white; margin-top: 40px">Bienvenido a EduMentor</h1>
+
+    <div class="user-container">
+      {% for u in users %}
+      <div class="user-card" data-id="{{ u[0] }}" data-name="{{ u[1] }}">
+        <!-- FOTO -->
+        <img
+          class="user-pic"
+          src="{{ url_for('static', filename='profile_pics/' ~ (u[2] if u[2] else 'default.png')) }}"
+        />
+
+        <!-- NOMBRE -->
+        <p class="user-name">{{ u[1] }}</p>
+      </div>
+      {% endfor %}
+
+      <!-- OPCIÓN DE AÑADIR -->
+      {% if users|length < 5 %}
+      <a href="{{ url_for('new_user') }}" class="user-card add-user">
+        <div class="plus">+</div>
+        <p class="user-name">Añadir</p>
+      </a>
+      {% endif %}
+    </div>
+
+    <!-- <script src="{{ url_for('static', filename='menu.js') }}"></script>
+
+    <!-- MENÚ CONTEXTUAL OCULTO -->
+    <div id="menu" class="context-menu">
+      <a id="editUser">Editar usuario</a>
+      <a id="deleteUser">Eliminar usuario</a>
+    </div>
+
+    <script>
+      const menu = document.getElementById("menu");
+      let selectedUserId = null;
+
+      // Ocultar menú cuando hagas clic fuera
+      document.addEventListener("click", (e) => {
+        if (!menu.contains(e.target)) {
+          menu.style.opacity = "0";
+          setTimeout(() => (menu.style.display = "none"), 150);
+        }
+      });
+
+      // Mostrar menú contextual al hacer clic derecho
+      document.querySelectorAll(".user-card").forEach((card) => {
+        card.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+
+          selectedUserId = card.dataset.id;
+
+          // Mostrar menú con animación
+          menu.style.display = "block";
+          menu.style.opacity = "0";
+
+          menu.style.left = e.pageX + "px";
+          menu.style.top = e.pageY + "px";
+
+          setTimeout(() => {
+            menu.style.opacity = "1";
+          }, 10);
+        });
+
+        // Click izquierdo: entrar al usuario
+        card.addEventListener("click", () => {
+          if (card.classList.contains("add-user")) return;
+          window.location.href = `/select_user/${card.dataset.id}`;
+        });
+      });
+
+      // Opciones del menú
+      document.getElementById("editUser").onclick = () => {
+        window.location.href = `/edit_user/${selectedUserId}`;
+      };
+
+      document.getElementById("deleteUser").onclick = () => {
+        window.location.href = `/delete_user/${selectedUserId}`;
+      };
+    </script>
+  </body>
+</html>

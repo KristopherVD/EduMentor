@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block content %}
+
+<h2>📊 Resultados del Quiz</h2>
+
+<p>Calificación: <strong>{{ score }}/10</strong></p>
+
+{% for q in questions %}
+<div style="border: 1px solid #444; padding: 15px; margin-bottom: 15px">
+  <p><strong>{{ loop.index }}. {{ q.question }}</strong></p>
+
+  {% if q.is_correct %}
+  <p style="color: green">✔ Correcta</p>
+  {% else %}
+  <p style="color: red">✖ Incorrecta</p>
+  {% endif %}
+
+  <p>Tu respuesta: {{ q.student }}</p>
+
+  {% if q.type != "open" %}
+  <p>Respuesta correcta: {{ q.correct }}</p>
+  {% endif %} {% if q.feedback %}
+  <p>🧠 {{ q.feedback }}</p>
+  {% endif %}
+</div>
+{% endfor %} {% if passed %}
+<p style="color: green">🎉 Aprobado</p>
+<form action="/course/{{ user_id }}" method="get">
+  <button
+    type="submit"
+    style="
+      padding: 10px 20px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    "
+  >
+    ▶ Avanzar al siguiente tema
+  </button>
+</form>
+{% else %}
+<p style="color: red">❌ Reprobado</p>
+<form action="/course/{{ user_id }}" method="get">
+  <button
+    type="submit"
+    style="
+      padding: 10px 20px;
+      background: #c0392b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    "
+  >
+    Repetir tema
+  </button>
+</form>
+{% endif %} {% endblock %}

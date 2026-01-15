@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block content %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nuevo usuario</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Crear nuevo usuario</h1>
+
+      <form method="POST">
+        <label>Nombre del usuario:</label>
+        <input type="text" name="name" required />
+
+        <button type="submit">Crear</button>
+      </form>
+
+      <a href="{{ url_for('index') }}">Regresar</a>
+    </div>
+  </body>
+</html>
+{% endblock %}

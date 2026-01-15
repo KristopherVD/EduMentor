@@ -1,0 +1,373 @@
+¡Hola! Como tu tutor académico, me complace analizar estos documentos de investigación y utilizarlos como base para un curso introductorio.
+
+Estos artículos abordan la vanguardia de la robótica, centrándose en la simulación, el control y la integración de la inteligencia artificial y los sistemas de visión.
+
+## 1. Resumen del Contenido de los Documentos
+
+Los cuatro documentos proporcionan una visión integral de cómo se diseñan, modelan y controlan los sistemas robóticos modernos utilizando entornos de simulación (principalmente **ROS y Gazebo**), con un enfoque particular en brazos robóticos y la integración de **Inteligencia Artificial (IA)** y **Robótica Blanda (Soft Robotics)**.
+
+| Documento | Tema Principal | Metodología Clave |
+| :--- | :--- | :--- |
+| **Assis et al.** | Control de un brazo robótico 6-DoF mediante teleoperación basada en gestos y Machine Learning. | Uso de **Mediapipe** para extraer *landmarks* humanos (hombro, índice, pulgar) y entrenar una **Red Neuronal Secuencial** para predecir los ángulos de los servomotores. |
+| **Chen et al.** | Simulación de manipuladores rígidos equipados con una pinza neumática blanda (soft gripper). | Modelado de la deformación blanda mediante la segmentación del cuerpo en cuerpos rígidos articulados y la formulación de un modelo dinámico de deformación (aproximado por la **Ley de Hooke**) implementado en un *plugin* de Gazebo/ODE. |
+| **Huang et al.** | Proceso general de modelado y simulación de un brazo robótico 6-DoF en Gazebo. | Detallado modelado mecánico (URDF), incluyendo la estimación precisa del **Momento de Inercia (MOI)** mediante el Teorema del Eje Paralelo. Implementación de controladores **PID** y algoritmos de planificación de trayectoria (**RRT***).|
+| **Willis & Liu** | Diseño, simulación y control de un brazo robótico blando con sensores de curvatura integrados. | Creación de un modelo segmentado en Gazebo. Desarrollo de un método de **estimación de pose basado en modelo** (aproximación por arcos circulares) utilizando las lecturas de sensores de deformación simulados. |
+
+**Conclusiones Sintetizadas:**
+
+1.  **Herramientas Centrales:** ROS y Gazebo son la infraestructura fundamental para la simulación, permitiendo modelar desde la dinámica mecánica (D3) hasta sistemas complejos de percepción y control (D1, D2, D4).
+2.  **Control Inteligente:** Es posible reemplazar el cálculo cinemático tradicional con redes neuronales (D1), permitiendo la teleoperación intuitiva basada en visión por computadora, aunque con desafíos en la precisión de los actuadores finales (gripper).
+3.  **Modelado de Robótica Blanda:** Los simuladores de cuerpo rígido (Gazebo) pueden adaptarse para simular cuerpos deformables (soft grippers) mediante la segmentación en enlaces rígidos conectados por articulaciones con propiedades elásticas (D2, D4), un enfoque más rápido que los métodos de Elemento Finito (FEM).
+4.  **Precisión de la Simulación:** La fidelidad de la simulación depende de un modelado físico preciso (cálculo de MOI en D3) y un buen ajuste de los controladores (PID en D3).
+
+---
+
+## 2. Propuesta de Curso Introductorio
+
+Basándonos en estos documentos, propongo un curso introductorio titulado:
+
+**"Simulación Robótica y Control Inteligente: De la Mecánica Clásica a la Visión por Computadora"**
+
+Este curso de cinco módulos está diseñado para estudiantes que desean entender la implementación práctica de sistemas robóticos complejos utilizando ROS y Gazebo.
+
+| Módulo | Título del Tema |
+| :--- | :--- |
+| **Módulo 1** | Fundamentos de la Simulación Robótica: ROS, Gazebo y Modelado URDF. |
+| **Módulo 2** | Dinámica y Control Clásico de Articulaciones Rígidas. |
+| **Módulo 3** | Planificación de Trayectorias y Algoritmos de Movimiento Avanzado. |
+| **Módulo 4** | Integración de Percepción y Control Basado en Machine Learning. |
+| **Módulo 5** | Introducción a la Simulación y Sensores en Robótica Blanda. |
+
+---
+
+## 3. Introducción por Tema
+
+A continuación, se presenta una breve descripción de cada módulo propuesto:
+
+### Módulo 1: Fundamentos de la Simulación Robótica: ROS, Gazebo y Modelado URDF
+
+**Introducción:** Este módulo sienta las bases del entorno de trabajo. Los estudiantes aprenderán a utilizar el Robot Operating System (ROS) como la estructura de comunicación central y Gazebo como el motor de física realista. Se cubrirá el **Unified Robot Description Format (URDF)**, el lenguaje estándar para describir la estructura cinemática, visual y, crucialmente, las propiedades físicas de un robot. Una correcta descripción del robot en URDF, incluyendo la jerarquía de enlaces (*links*) y articulaciones (*joints*), es el primer paso para cualquier simulación funcional (como se detalla en D3).
+
+### Módulo 2: Dinámica y Control Clásico de Articulaciones Rígidas
+
+**Introducción:** Una simulación robótica precisa requiere que la dinámica del sistema sea fiel a la realidad. Este módulo se enfoca en el cálculo de propiedades físicas, como el **Momento de Inercia (MOI)**, utilizando teoremas como el del Eje Paralelo (D3), esencial para la respuesta dinámica de los enlaces. Luego, se introduce el concepto de control de bajo nivel. Se estudiarán los controladores de articulación (como los **controladores PID**), analizando cómo su correcta sintonización es fundamental para lograr un rendimiento de seguimiento de posición rápido y sin sobreimpulso (D3).
+
+### Módulo 3: Planificación de Trayectorias y Algoritmos de Movimiento Avanzado
+
+**Introducción:** Una vez que las articulaciones responden correctamente, el siguiente desafío es cómo mover el brazo de manera eficiente y segura a través de un espacio de trabajo. Este módulo explora la planificación de movimiento en entornos con obstáculos. Se examinarán algoritmos probabilísticos como **RRT\*** (Rapidly-exploring Random Tree Star, D3), que buscan rutas óptimas. Los estudiantes aprenderán a evaluar estas trayectorias no solo por su longitud, sino también por la suavidad de los cambios de velocidad y aceleración, métricas clave para la operación robótica real (D3).
+
+### Módulo 4: Integración de Percepción y Control Basado en Machine Learning
+
+**Introducción:** Este módulo introduce cómo la robótica moderna utiliza la percepción (visión) y la inteligencia artificial para lograr un control más intuitivo y adaptable. Se explorará la captura de movimiento humano utilizando *frameworks* ligeros de visión por computadora como **Mediapipe** (D1). Estos datos de gestos se utilizan luego para entrenar una **Red Neuronal** capaz de mapear directamente la pose humana a los ángulos de las articulaciones del robot, eliminando la necesidad de cálculos cinemáticos explícitos. Se analizarán las métricas de rendimiento (MAE, precisión) y los desafíos inherentes a este enfoque (D1).
+
+### Módulo 5: Introducción a la Simulación y Sensores en Robótica Blanda
+
+**Introducción:** Finalmente, exploramos cómo los principios de simulación rígida se adaptan a la **Robótica Blanda**. Debido a la complejidad de los materiales deformables, los investigadores recurren a la simulación por medio de la **segmentación en cuerpos rígidos articulados** con fuerzas elásticas aproximadas (Ley de Hooke) implementadas como *plugins* de física (D2, D4). Además, se aborda la necesidad de *feedback* en estos sistemas flexibles, estudiando cómo simular y utilizar sensores de deformación (strain sensors) y aplicando métodos de **estimación de pose basados en modelos** (aproximación por arcos) para determinar la forma y fuerza del efector final, un paso crucial para la manipulación adaptativa (D4).
+
+# Continuación del Curso: Fundamentos
+
+¡Bienvenidos de nuevo! En esta sesión, profundizaremos en las bases que sustentan cualquier área de estudio: cómo adquirimos el conocimiento de manera fiable y estructurada.
+
+---
+
+## 📚 Tema 1 (Continuación): Fundamentos de la Investigación y el Pensamiento Crítico
+
+El conocimiento no es uniforme. Para construir una disciplina académica sólida, debemos diferenciar entre las distintas formas de adquirir información y priorizar aquellas que son sistemáticas y verificables.
+
+### 🎯 Objetivos de la Sesión
+
+Al finalizar esta sección, usted será capaz de:
+
+1.  Distinguir entre diferentes fuentes de adquisición de conocimiento (autoridad, intuición y ciencia).
+2.  Describir y aplicar los pasos del Método Científico.
+3.  Formular hipótesis claras y verificables.
+
+### 1.2. Las Fuentes del Conocimiento
+
+Antes de aceptar una afirmación como verdadera, es crucial evaluar de dónde proviene esa creencia. Históricamente, se han identificado varias vías principales para la adquisición de conocimiento:
+
+| Vía de Adquisición | Descripción | Limitación Principal |
+| :--- | :--- | :--- |
+| **Autoridad** | Aceptar la información porque proviene de una fuente respetada (un experto, un libro de texto, la tradición). | La autoridad puede equivocarse o tener sesgos. No promueve la verificación. |
+| **Intuición** | Creencia basada en un sentimiento o una corazonada personal, sin evidencia lógica o empírica. | Es subjetiva y no transferible; imposible de probar a otros. |
+| **Racionalismo** | El conocimiento se obtiene mediante la lógica y el razonamiento deductivo. | Si las premisas iniciales son falsas, las conclusiones lógicas serán igualmente erróneas. |
+| **Empirismo** | El conocimiento se obtiene a través de la observación y la experiencia sensorial directa. | Las experiencias pueden ser engañosas o mal interpretadas si no se recolectan sistemáticamente. |
+| **Ciencia (Método Científico)** | Combina el racionalismo y el empirismo de forma sistemática para probar hipótesis. | **Es la vía preferida en la academia** por su capacidad de autocorrección y replicabilidad. |
+
+---
+
+### 1.3. El Método Científico: La Columna Vertebral de la Academia
+
+El Método Científico es el procedimiento sistemático que guía la investigación. Asegura que las conclusiones sean objetivas, transparentes y sujetas a **falsación** (la posibilidad de demostrar que son incorrectas).
+
+#### 📜 Pasos Fundamentales del Método Científico
+
+Todo proceso de investigación debe seguir una secuencia lógica que minimice los sesgos y maximice la validez de los resultados:
+
+#### Paso 1: Observación y Definición del Problema
+*   Identificación de un fenómeno, una necesidad o una pregunta sin respuesta clara.
+*   Debe ser una pregunta específica y susceptible de ser respondida mediante datos (empíricamente).
+    *   *Ejemplo:* Las plantas del invernadero B crecen más rápido que las del invernadero A.
+
+#### Paso 2: Revisión Bibliográfica y Marco Teórico
+*   Investigación de estudios previos relacionados con el problema.
+*   Esto ayuda a contextualizar el problema, evitar la duplicación de esfuerzos y establecer el marco conceptual sobre el cual se basará la hipótesis.
+
+#### Paso 3: Formulación de Hipótesis
+*   Una **hipótesis** es una declaración tentativa que propone una explicación o relación entre variables. Es una predicción informada.
+*   Debe ser **verificable** (o falsable).
+    *   *Ejemplo de Hipótesis:* El aumento de la concentración de nitrógeno en el suelo es la causa del mayor crecimiento en el invernadero B.
+
+#### Paso 4: Diseño Experimental y Recolección de Datos
+*   Planificación rigurosa de cómo se pondrá a prueba la hipótesis.
+*   Implica definir las **variables** (independientes y dependientes), la muestra y los métodos de medición para asegurar que los resultados sean fiables.
+    *   *En el ejemplo:* Se aplicará nitrógeno extra a las plantas del invernadero A (Grupo Experimental) y se mantendrá el suelo sin cambios en el invernadero B (Grupo Control).
+
+#### Paso 5: Análisis de Resultados
+*   Organización e interpretación de los datos recolectados, generalmente utilizando herramientas estadísticas.
+*   Se busca determinar si los resultados apoyan o refutan la hipótesis.
+
+#### Paso 6: Conclusión y Discusión
+*   Se acepta o se rechaza la hipótesis (nunca se "prueba" la hipótesis como una verdad absoluta, sino que los datos la "apoyan").
+*   Se discuten las implicaciones de los hallazgos y se sugieren nuevas líneas de investigación.
+    *   *Resultado:* Si los datos muestran que el nitrógeno extra no afectó el crecimiento, la hipótesis se **rechaza**, y se deben buscar otras variables explicativas.
+
+---
+
+### 📝 Actividad de Aplicación: Reconociendo Variables
+
+Para comprender el diseño experimental, es vital diferenciar las variables clave:
+
+1.  **Variable Independiente (VI):** Es aquella que el investigador **manipula** o cambia deliberadamente para observar su efecto. (La *Causa* propuesta).
+2.  **Variable Dependiente (VD):** Es la variable que se **mide** y se espera que cambie como resultado de la manipulación de la VI. (El *Efecto* medido).
+
+#### Caso de Estudio
+
+Un equipo de psicólogos quiere investigar si el uso de una nueva técnica de memorización visual (Técnica V) mejora el rendimiento académico en estudiantes de secundaria en comparación con el método de estudio tradicional.
+
+**Instrucción:** Identifique la Variable Independiente y la Variable Dependiente en este estudio, y proponga una hipótesis nula y una hipótesis alternativa.
+
+| Elemento | Identificación |
+| :--- | :--- |
+| **Variable Independiente (VI)** | |
+| **Variable Dependiente (VD)** | |
+| **Hipótesis Alternativa ($H_1$)** | (Predicción de que sí hay un efecto) |
+| **Hipótesis Nula ($H_0$)** | (Predicción de que no hay efecto) |
+
+***
+
+### ➡️ Transición al Tema 2
+
+Una vez que comprendemos la estructura del conocimiento y la metodología científica, estamos listos para pasar de la teoría a la práctica de la investigación.
+
+En el **Tema 2**, exploraremos la estructura formal de los documentos académicos, las normas de citación y referenciación, y cómo realizar una búsqueda bibliográfica efectiva para construir nuestro propio Marco Teórico.
+
+## Tema 2: Estructura y Diseño Organizacional
+
+Una vez comprendida la naturaleza y el alcance de la organización (Tema 1), el siguiente paso esencial es analizar el marco que da forma a su funcionamiento: la estructura. La estructura organizacional es el esqueleto formal que define cómo se dividen, agrupan y coordinan las tareas.
+
+### 2.1. El Esqueleto de la Organización
+
+La estructura organizacional no es meramente un organigrama; es el resultado de decisiones estratégicas sobre cómo gestionar la división del trabajo para alcanzar los objetivos de la organización de la manera más eficiente y eficaz posible.
+
+Un diseño organizacional adecuado es crucial porque:
+
+1.  **Define la Claridad:** Establece quién reporta a quién y la jerarquía de la autoridad.
+2.  **Facilita la Coordinación:** Asegura que las distintas unidades trabajen conjuntamente hacia metas comunes.
+3.  **Reduce la Duplicidad:** Evita que los recursos o el esfuerzo se gasten en tareas redundantes.
+4.  **Alinea Estrategia y Operación:** La estructura debe ser un reflejo de la estrategia empresarial.
+
+### 2.2. Elementos Clave de la Estructura Organizacional
+
+El diseño de cualquier estructura se construye a partir de seis elementos fundamentales, que deben ser ponderados y combinados por la dirección:
+
+#### 2.2.1. Especialización del Trabajo
+
+Define el grado en que las actividades dentro de la organización se subdividen en tareas separadas.
+
+*   **Alto grado de especialización:** Cada empleado realiza una pequeña porción de la actividad total (ejemplo: cadena de montaje). Produce alta eficiencia, pero puede generar monotonía y fatiga.
+*   **Bajo grado de especialización:** Los empleados realizan una amplia variedad de tareas (ejemplo: un artesano). Produce mayor compromiso, pero menor eficiencia a gran escala.
+
+#### 2.2.2. Departamentalización
+
+Una vez que se han dividido las tareas (especialización), deben agruparse en unidades de trabajo manejables. Este proceso de agrupación se conoce como departamentalización.
+
+| Tipo de Departamentalización | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| **Por Funciones** | Agrupa trabajos similares basados en las habilidades o la naturaleza de las tareas (Marketing, Finanzas, Producción). | Eficiencia y especialización técnica. |
+| **Por Productos o Servicios** | Agrupa todas las actividades necesarias para producir un producto o servicio específico bajo un único directivo. | Flexibilidad, fácil rendición de cuentas por resultados. |
+| **Por Geografía** | Agrupa el trabajo basándose en la ubicación territorial. | Permite responder mejor a las necesidades de clientes locales. |
+| **Por Procesos** | Agrupa tareas en función del flujo de trabajo o etapas del proceso productivo. | Operaciones de manufactura o atención al cliente. |
+| **Por Clientes** | Agrupa trabajos según las necesidades de grupos de clientes específicos (Ej. Gobierno, Retail, Consumo). | Alto enfoque en el servicio al cliente. |
+
+#### 2.2.3. Cadena de Mando
+
+Es una línea ininterrumpida de autoridad que se extiende desde la cima de la organización hasta el escalón más bajo, clarificando quién debe reportar a quién.
+
+Conceptos asociados:
+
+*   **Autoridad:** Los derechos inherentes a una posición directiva para dar órdenes y esperar que estas se cumplan.
+*   **Unidad de Mando:** Principio que establece que cada empleado debe reportar a un único superior (aunque este principio se debilita en estructuras modernas como la matricial).
+
+#### 2.2.4. Tramo de Control (Ámbito de Control)
+
+Se refiere al número de subordinados que un gerente puede dirigir de manera eficiente y efectiva.
+
+*   **Tramo amplio:** Pocos niveles jerárquicos, estructura plana (el gerente tiene muchos subordinados). Tiende a reducir costes, pero puede dificultar la supervisión cercana.
+*   **Tramo estrecho:** Muchos niveles jerárquicos, estructura alta (el gerente tiene pocos subordinados). Permite un control estricto, pero es más costosa e ineficiente.
+
+#### 2.2.5. Centralización y Descentralización
+
+Define dónde reside la autoridad para la toma de decisiones.
+
+| Característica | Centralización | Descentralización |
+| :--- | :--- | :--- |
+| **Lugar de Decisión** | La alta dirección toma las decisiones clave. | Los gerentes de nivel inferior están facultados para tomar decisiones. |
+| **Ventaja** | Mayor control y uniformidad en las políticas. | Mayor flexibilidad, respuesta más rápida y motivación del personal. |
+
+#### 2.2.6. Formalización
+
+Es el grado en que los puestos de trabajo dentro de la organización están estandarizados y el comportamiento de los empleados está guiado por reglas y procedimientos.
+
+*   **Alta formalización:** Puestos altamente regulados (manuales de procedimientos detallados).
+*   **Baja formalización:** Los empleados tienen discreción sobre su trabajo.
+
+---
+
+### 2.3. Tipos Comunes de Diseño Organizacional
+
+La combinación y el equilibrio de los seis elementos anteriores da lugar a diferentes modelos de diseño organizacional, cada uno adecuado para un contexto y estrategia específicos.
+
+#### 2.3.1. La Estructura Simple
+
+Es común en organizaciones pequeñas o en etapas iniciales.
+
+*   **Características:** Baja departamentalización, tramos de control amplios, autoridad centralizada en una única persona y poca formalización.
+*   **Ventajas:** Rápida, flexible y responsabilidad clara.
+*   **Desventajas:** Dependencia excesiva de una persona; inadecuada a medida que la organización crece.
+
+#### 2.3.2. La Burocracia
+
+También conocida como Estructura Mecanicista, se basa en la estandarización.
+
+*   **Características:** Especialización del trabajo muy alta, alta formalización, agrupamiento funcional de tareas, cadena de mando estricta, toma de decisiones centralizada.
+*   **Ventajas:** Opera eficientemente para tareas estandarizadas y repetitivas (ejemplo: empresas de servicios públicos o manufactura en masa).
+*   **Desventajas:** Obsesión por las reglas, rigidez y dificultad para responder a cambios rápidos.
+
+#### 2.3.3. La Estructura Divisional
+
+La organización se divide en unidades semi-autónomas o divisiones, que suelen basarse en productos, geografías o clientes (véase Departamentalización).
+
+*   **Características:** Cada división es responsable de sus propias operaciones y resultados. La sede central actúa como un supervisor estratégico.
+*   **Ventajas:** Mejora la coordinación dentro de la división; permite enfocar los recursos en resultados específicos.
+
+#### 2.3.4. La Estructura Matricial
+
+Este diseño rompe el principio de unidad de mando al crear líneas duales de autoridad.
+
+*   **Descripción:** Los empleados tienen dos jefes: el gerente funcional (jefe de su departamento, ej. Ingeniería) y el gerente de proyecto o producto (jefe temporal del equipo específico).
+*   **Ventajas:** Facilita la coordinación de tareas complejas e interdependientes, eficiente uso de especialistas.
+*   **Desafíos:** Puede generar conflictos de rol, ya que los empleados tienen múltiples demandas de autoridad.
+
+| Diseño Organizacional | Énfasis Estructural | Adecuación Típica |
+| :--- | :--- | :--- |
+| Simple | Flexibilidad, Centralización | Start-ups, Pymes |
+| Burocrático (Mecanicista) | Estandarización, Control | Grandes empresas estables, industrias maduras |
+| Divisional | Resultados, Autonomía | Conglomerados, empresas multinacionales |
+| Matricial | Coordinación, Especialización dual | Proyectos complejos, I+D |
+
+## Tema 3: Funciones y Modularización
+
+Una vez que hemos dominado las estructuras de control (condicionales y bucles, cubiertos en el tema anterior), el siguiente paso esencial para construir software eficiente es la modularización del código. Esto se logra mediante el uso de **Funciones** (también conocidas como métodos o subrutinas, dependiendo del lenguaje).
+
+### 3.1. Principios de la Modularización
+
+La función principal de una función es agrupar una secuencia de instrucciones con un propósito específico, permitiendo que este bloque de código pueda ser llamado y ejecutado desde cualquier parte del programa.
+
+#### Ventajas clave:
+
+| Principio | Descripción |
+| :--- | :--- |
+| **DRY (Don't Repeat Yourself)** | Evita la duplicación de código. Si necesitas realizar la misma tarea varias veces, la encapsulas en una función y la llamas. |
+| **Legibilidad y Mantenimiento** | Divide un programa grande en partes pequeñas y manejables. Esto facilita la lectura, la corrección de errores (debugging) y las futuras modificaciones. |
+| **Reutilización** | Las funciones bien diseñadas pueden ser utilizadas en diferentes proyectos o módulos sin necesidad de reescribir la lógica. |
+| **Abstracción** | Permite enfocarse en *qué* hace una función (su propósito) sin preocuparse por *cómo* lo hace (los pasos internos). |
+
+---
+
+### 3.2. Estructura y Definición de una Función
+
+Toda función se compone de elementos básicos que definen su comportamiento y su interfaz (la forma en que se comunica con el resto del código).
+
+#### Componentes esenciales:
+
+1.  **Nombre (Identificador):** Un nombre descriptivo que indica la tarea que realiza la función (ej. `calcular_promedio`, `validar_datos`).
+2.  **Parámetros (Argumentos de Entrada):** Son los valores que la función necesita recibir para poder operar. Se especifican entre paréntesis `()`. Una función puede tener cero o más parámetros.
+3.  **Cuerpo (Bloque de Instrucciones):** El conjunto de sentencias que se ejecutan cuando la función es llamada.
+4.  **Valor de Retorno (Output):** El resultado que la función devuelve al código que la llamó. Esto se gestiona generalmente mediante la palabra clave `return`. Una función puede devolver un solo valor, múltiples valores (como una tupla o lista), o no devolver nada (funciones de procedimiento o `void`).
+
+#### Ejemplo Conceptual:
+
+```
+Definir Funcion Nombre(Parámetro1, Parámetro2):
+    // Cuerpo de la función
+    Instrucción 1
+    Instrucción 2
+    ...
+    Retornar Resultado
+```
+
+### 3.3. Ámbito de las Variables (Scope)
+
+El concepto de *ámbito* es fundamental al trabajar con funciones, ya que determina la accesibilidad y el tiempo de vida de las variables.
+
+#### 3.3.1. Ámbito Local
+
+Las variables declaradas *dentro* del cuerpo de una función se consideran **variables locales**.
+
+*   **Accesibilidad:** Solo pueden ser accedidas y modificadas dentro de esa función específica.
+*   **Tiempo de Vida:** Existen únicamente mientras la función se está ejecutando. Una vez que la función termina, estas variables son destruidas (liberación de memoria).
+*   **Importancia:** Garantiza que las funciones sean bloques aislados y que no interfieran con variables de otras partes del código.
+
+#### 3.3.2. Ámbito Global
+
+Las variables declaradas *fuera* de cualquier función (a nivel del módulo principal del programa) se consideran **variables globales**.
+
+*   **Accesibilidad:** Pueden ser leídas desde cualquier parte del programa, incluyendo dentro de las funciones.
+*   **Modificación (Advertencia):** Aunque se pueden leer fácilmente, la modificación de variables globales desde dentro de una función requiere a menudo una declaración especial (ej. `global` en Python o `static` en otros contextos), ya que por defecto, si intentas asignar un valor, el compilador/intérprete asume que estás creando una *nueva* variable local con el mismo nombre.
+
+> **Regla de oro:** Minimizar el uso de variables globales para evitar efectos secundarios inesperados (side effects). Lo ideal es que la función reciba todos los datos que necesita como parámetros y devuelva su resultado usando `return`.
+
+### 3.4. Paso de Argumentos
+
+Cuando se llama a una función, los valores que se le proporcionan se llaman **argumentos**. La manera en que estos argumentos son manejados dentro de la función varía según el lenguaje y el tipo de dato.
+
+#### 3.4.1. Paso por Valor
+
+En este método, se pasa a la función una **copia** del valor del argumento.
+
+*   **Efecto:** Cualquier modificación que la función realice sobre el parámetro interno (la copia) no afectará la variable original en el código que realizó la llamada.
+*   *Es común para tipos de datos primitivos (números, booleanos, caracteres).*
+
+#### 3.4.2. Paso por Referencia
+
+En este método, se pasa a la función la **dirección de memoria** donde reside el argumento original (no una copia).
+
+*   **Efecto:** Si la función modifica el contenido del parámetro, la variable original en el código de llamada **será modificada**.
+*   *Es común para estructuras de datos complejas o mutables (listas, arrays, objetos) en muchos lenguajes.*
+
+---
+
+### 3.5. Recursividad
+
+La recursividad es un concepto avanzado de modularización donde una función se llama a sí misma para resolver un problema. Es una alternativa elegante a los bucles iterativos (vistos en el Tema 2) para ciertos tipos de problemas matemáticos o estructuras de datos jerárquicas.
+
+#### Requisitos para la Recursividad:
+
+1.  **Caso Base:** Una condición de salida que detiene la recursión. Si no existe un caso base, la función se llamará indefinidamente, resultando en un error de desbordamiento de pila (*stack overflow*).
+2.  **Llamada Recursiva:** La función debe llamarse a sí misma, pero con un estado modificado que se acerca progresivamente al caso base.
+
+| Estructura | Función Típica |
+| :--- | :--- |
+| **Iteración (Bucle)** | Usa estructuras como `for` o `while` para repetir un proceso hasta que se cumple la condición. Consume menos memoria de pila. |
+| **Recursividad** | Resuelve el problema dividiéndolo en versiones más pequeñas de sí mismo. Ideal para problemas como cálculo de factoriales, sucesiones de Fibonacci o recorridos de árboles. |

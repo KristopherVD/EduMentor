@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block title %}Curso | EduMentor{% endblock %} {%
+block content %}
+
+<!-- MathJax: render matemáticas LaTeX -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<h1>Tu Curso Personalizado</h1>
+
+<div class="course-content">{{ content | safe }}</div>
+
+<hr />
+
+<form method="POST" action="/submit_answer/{{ user_id }}">
+  <label for="answer">Tu respuesta:</label><br />
+  <textarea
+    id="answer"
+    name="answer"
+    rows="6"
+    style="width: 100%"
+    required
+  ></textarea>
+  <br /><br />
+  <button type="submit">Enviar respuesta</button>
+</form>
+
+<br />
+
+<a class="btn danger" href="/">Salir</a>
+
+{% endblock %}

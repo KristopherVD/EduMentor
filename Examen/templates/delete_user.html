@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+
+<h2>Eliminar usuario</h2>
+
+<p style="text-align: center; color: #aaa">
+  Ingresa el PIN para confirmar la eliminación.
+</p>
+
+<form method="POST">
+  <input type="password" name="pin" placeholder="PIN de seguridad" />
+
+  {% if error %}
+  <p style="color: #ff6b6b; text-align: center">{{ error }}</p>
+  {% endif %}
+
+  <button type="submit" style="background: #d9534f">Eliminar usuario</button>
+</form>
+
+<a class="cancel" href="/">Cancelar</a>
+
+{% endblock %}

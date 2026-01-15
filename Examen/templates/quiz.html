@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quiz intermedio</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #111;
+        color: white;
+        margin: 0;
+        padding: 40px;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      form {
+        width: 95%;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .question {
+        margin-bottom: 25px;
+        padding: 18px;
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 8px;
+      }
+
+      .question h4 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-weight: normal;
+      }
+
+      .options label {
+        display: block;
+        margin-bottom: 8px;
+        cursor: pointer;
+      }
+
+      input[type="radio"] {
+        margin-right: 8px;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 90px;
+        background: #222;
+        color: white;
+        border: 1px solid #444;
+        border-radius: 6px;
+        padding: 10px;
+        resize: vertical;
+      }
+
+      button {
+        display: block;
+        margin: 30px auto 0;
+        padding: 12px 24px;
+        font-size: 16px;
+        background: #1e90ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #187bdb;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Quiz intermedio</h2>
+
+    <form method="POST" action="/submit_quiz/{{ quiz_id }}">
+      {% for q in questions %}
+      <div class="question">
+        <h4>{{ loop.index }}. {{ q.question }}</h4>
+
+        {% if q.type == "multiple_choice" %}
+        <div class="options">
+          {% for opt in q.options %}
+          <label>
+            <input type="radio" name="{{ q.id }}" value="{{ opt }}" required />
+            {{ opt }}
+          </label>
+          {% endfor %}
+        </div>
+
+        {% elif q.type == "true_false" %}
+        <label>
+          <input type="radio" name="{{ q.id }}" value="true" required />
+          Verdadero
+        </label>
+        <label>
+          <input type="radio" name="{{ q.id }}" value="false" />
+          Falso
+        </label>
+
+        {% elif q.type == "open" %}
+        <textarea
+          name="{{ q.id }}"
+          placeholder="Escribe tu respuesta aquí..."
+          required
+        ></textarea>
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <button type="submit">Enviar respuestas</button>
+    </form>
+  </body>
+</html>

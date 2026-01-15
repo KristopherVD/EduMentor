@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+
+<h2>Editar perfil</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  <label>Nuevo nombre (opcional):</label>
+  <input type="text" name="name" placeholder="{{ user[1] }}" />
+
+  <label>Nueva foto (opcional):</label>
+  <input type="file" name="photo" />
+
+  <button type="submit">Guardar cambios</button>
+</form>
+
+<a class="cancel" href="/">Cancelar</a>
+
+{% endblock %}
