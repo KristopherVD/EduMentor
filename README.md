@@ -1,9 +1,21 @@
-# Agente Tutor Inteligente basado en LLM
+# Agente Tutor Inteligente basado en LLM (EduMentor)
 
 ## Descripción general
-Este proyecto implementa un agente tutor inteligente capaz de generar cursos y evaluaciones dinámicas a partir de documentos académicos en formato PDF, utilizando modelos de lenguaje de gran escala (LLMs) mediante Google Gemini y Google ADK.
 
-La aplicación está desarrollada como un sistema web utilizando Flask y una base de datos SQLite para la gestión de usuarios y documentos.
+Este proyecto implementa un **agente tutor inteligente** capaz de generar cursos personalizados y evaluaciones intermedias de forma dinámica a partir de documentos académicos en formato PDF. El sistema utiliza **Modelos de Lenguaje de Gran Escala (LLMs)** mediante la **API de Google Gemini**, integrados a través del **Google Agent Development Kit (ADK)**.
+
+La aplicación está desarrollada como un sistema web utilizando **Flask** y una base de datos **SQLite** para la gestión de usuarios y documentos. El proyecto fue desarrollado con fines **académicos y experimentales**, como parte de la materia *Agentes Inteligentes*, explorando el uso de agentes basados en LLMs en contextos educativos.
+
+---
+
+## Características principales
+
+- Carga de documentos académicos en formato PDF por usuario.
+- Procesamiento del contenido del documento como contexto educativo.
+- Generación automática de explicaciones temáticas.
+- Generación de evaluaciones intermedias dinámicas.
+- Retroalimentación básica de respuestas.
+- Interfaz web accesible desde navegador.
 
 ---
 
@@ -11,28 +23,53 @@ La aplicación está desarrollada como un sistema web utilizando Flask y una bas
 
 Actualmente, el sistema utiliza un esquema de autenticación **simplificado**, definido de la siguiente manera:
 
-- Todas las cuentas de usuario utilizan la contraseña por defecto: `0000`
-- La contraseña **no es modificable** desde la interfaz actual
+- Las contraseñas de los usuarios están configuradas por defecto como `0000`.
+- La modificación de contraseñas no está implementada en esta versión.
 
-Esta decisión se tomó con fines académicos y de prototipado rápido, priorizando la funcionalidad principal del agente sobre la seguridad del sistema.
+Esta decisión se tomó con fines **académicos y de prototipado rápido**, priorizando la funcionalidad principal del agente tutor inteligente sobre los mecanismos de seguridad.
 
-### Trabajo futuro
+> ⚠️ **Nota**  
+> Este sistema **no está diseñado para uso en producción** ni para entornos con información sensible.
+
+---
+
+## Notas importantes
+
+- El sistema depende de la **API de Google Gemini**, por lo que su funcionamiento puede verse afectado por:
+  - Límites de cuota.
+  - Indisponibilidad temporal del servicio.
+  - Restricciones del plan utilizado.
+
+- Durante pruebas académicas, estos factores pueden provocar errores al generar cursos o evaluaciones.
+
+---
+
+## Trabajo futuro
+
 Como trabajo futuro, se propone:
-- Implementar hash seguro de contraseñas
-- Permitir cambio de contraseña por usuario
-- Integrar un sistema de autenticación más robusto
+
+- Implementar almacenamiento de contraseñas con **hash seguro**.
+- Permitir el **cambio de contraseña** por usuario.
+- Integrar un sistema de **autenticación más robusto**.
+- Mejorar la evaluación automática con retroalimentación adaptativa.
+- Reducir la dependencia de un único proveedor de LLM.
 
 ---
 
 ## Requisitos
+
 - Python 3.10 o superior
 - Flask
 - sqlite3
-- Google ADK
-- Gemini API
+- Google Agent Development Kit (ADK)
+- API de Google Gemini
 
 ---
 
-## Ejecución
+## Instalación
+
+1. Clonar el repositorio:
+
 ```bash
-python app.py
+git clone https://github.com/KristopherVD/EduMentor.git
+cd EduMentor
