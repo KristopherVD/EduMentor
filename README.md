@@ -4,7 +4,7 @@
 
 Este proyecto implementa un **agente tutor inteligente** capaz de generar cursos personalizados y evaluaciones intermedias de forma dinámica a partir de documentos académicos en formato PDF. El sistema utiliza **Modelos de Lenguaje de Gran Escala (LLMs)** mediante la **API de Google Gemini**, integrados a través del **Google Agent Development Kit (ADK)**.
 
-La aplicación está desarrollada como un sistema web utilizando **Flask** y una base de datos **SQLite** para la gestión de usuarios y documentos. El proyecto fue desarrollado con fines **académicos y experimentales**, como parte de la materia *Agentes Inteligentes*, explorando el uso de agentes basados en LLMs en contextos educativos.
+La aplicación está desarrollada como un sistema web utilizando **Flask** y una base de datos **SQLite** para la gestión de usuarios y documentos. El proyecto fue desarrollado con fines **académicos y experimentales**, como parte de la materia _Agentes Inteligentes_, explorando el uso de agentes basados en LLMs en contextos educativos.
 
 ---
 
@@ -33,14 +33,43 @@ Esta decisión se tomó con fines **académicos y de prototipado rápido**, prio
 
 ---
 
+## Versiones y dependencias
+
+Las siguientes versiones fueron utilizadas durante el desarrollo y pruebas del proyecto:
+
+### Lenguaje y entorno
+- **Python:** 3.10+
+
+### Backend y servidor web
+- **Flask:** 3.0.x
+- **Werkzeug:** 3.0.x
+
+### Base de datos
+- **SQLite:** 3.x (incluida por defecto en Python)
+
+### Procesamiento de documentos
+- **PyPDF2:** 3.0.x  
+  (Extracción de texto desde archivos PDF)
+
+### Modelos de Lenguaje y agentes
+- **Google Gemini API**
+- **Google Agent Development Kit (ADK)**
+
+### Librerías estándar de Python
+- `os`
+- `json`
+- `uuid`
+- `sqlite3`
+
+> **Nota:** El funcionamiento del sistema depende de la disponibilidad y cuota de la API de Google Gemini.
+
+---
+
 ## Notas importantes
 
-- El sistema depende de la **API de Google Gemini**, por lo que su funcionamiento puede verse afectado por:
-  - Límites de cuota.
-  - Indisponibilidad temporal del servicio.
-  - Restricciones del plan utilizado.
-
-- Durante pruebas académicas, estos factores pueden provocar errores al generar cursos o evaluaciones.
+- El proyecto es de carácter **académico** y fue desarrollado como **prototipo funcional**.
+- La seguridad (manejo de contraseñas y credenciales) **no es prioritaria** en esta versión.
+- La API de Gemini puede presentar interrupciones temporales, límites de uso o cambios en sus políticas.
 
 ---
 
@@ -53,6 +82,7 @@ Como trabajo futuro, se propone:
 - Integrar un sistema de **autenticación más robusto**.
 - Mejorar la evaluación automática con retroalimentación adaptativa.
 - Reducir la dependencia de un único proveedor de LLM.
+- Añadir personalización del contenido basada en el desempeño del estudiante.
 
 ---
 
